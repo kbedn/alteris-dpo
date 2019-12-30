@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MaterialGroup index{% endblock %}
+
+{% block body %}
+    <h1>MaterialGroup index</h1>
+
+    <a class="btn btn-primary" href="{{ path('material_group_new') }}">Create new</a>
+    <hr>
+    {{ htmlTree|raw }}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MaterialGroup{% endblock %}
+
+{% block body %}
+    <h1>MaterialGroup</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ material_group.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ material_group.name }}</td>
+            </tr>
+            <tr>
+                <th>Materials</th>
+                <td>
+                    <ul>
+                        {% for material in material_group.materials %}
+                            <li>{{ material.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('material_group_index') }}">back to list</a>
+
+    <a class="btn btn-primary" href="{{ path('material_group_edit', {'id': material_group.id}) }}">edit</a>
+{% endblock %}

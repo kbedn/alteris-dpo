@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as AppAssert;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\ORM\Mapping as ORM;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
 
 /**
@@ -30,13 +31,15 @@ class Material
      * @ORM\Column(type="string", length=32)
      * @SWG\Property(type="string", maxLength=32)
      * @ApiProperty(iri="http://schema.org/name")
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=32)
      * @SWG\Property(type="string", maxLength=10)
      * @ApiProperty(iri="http://schema.org/codeValue")
+     * @Assert\NotBlank()
      */
     protected $code;
 
@@ -49,7 +52,9 @@ class Material
     /**
      * @var MaterialGroup
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\MaterialGroup")
+     * @ORM\ManyToOne(targetEntity="App\Entity\MaterialGroup", inversedBy="materials")
+     * @Assert\NotBlank()
+     * @AppAssert\NodeWithNoChildren()
      */
     protected $group;
 
@@ -73,7 +78,7 @@ class Material
      * @param null|string name
      * @return Material
      */
-    public function setName(?string  $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -100,9 +105,9 @@ class Material
     }
 
     /**
-     * @return UnitOfMeasure
+     * @return UnitOfMeasure|null
      */
-    public function getUnitOfMeasure(): UnitOfMeasure
+    public function getUnitOfMeasure(): ?UnitOfMeasure
     {
         return $this->unitOfMeasure;
     }
@@ -118,4 +123,30 @@ class Material
         return $this;
     }
 
+    /**
+     * @return MaterialGroup|null
+     */
+    public function getGroup(): ?MaterialGroup
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param MaterialGroup $group
+     * @return Material
+     */
+    public function setGroup(MaterialGroup $group): Material
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string) $this->getName();
+    }
 }

@@ -14,8 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UnitOfMeasure
 {
-    use TimestampableEntity;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -89,5 +87,32 @@ class UnitOfMeasure
         $this->shortcut = $shortcut;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMaterials(): ArrayCollection
+    {
+        return $this->materials;
+    }
+
+    /**
+     * @param ArrayCollection $materials
+     * @return UnitOfMeasure
+     */
+    public function setMaterials(ArrayCollection $materials): UnitOfMeasure
+    {
+        $this->materials = $materials;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

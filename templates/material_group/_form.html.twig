@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+<script src="/a2lix_sf_collection.min.js" crossorigin="anonymous"></script>
+<script>
+    a2lix_lib.sfCollection.init();
+</script>

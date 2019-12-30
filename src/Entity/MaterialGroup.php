@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -14,12 +14,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Gedmo\Tree(type="nested")
  * @ApiResource()
- * @ORM\Entity(repositoryClass="App\Repository\MaterialGroupRepository")
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class MaterialGroup
 {
-    use TimestampableEntity;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -29,6 +27,7 @@ class MaterialGroup
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -61,18 +60,30 @@ class MaterialGroup
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="MaterialGroup", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @Assert\Expression(
+     *     "this.materials.count() > 0",
+     *     message="Node without children violation"
+     * )
      */
     private $parent;
 
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="MaterialGroup", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
-    private $children;
+    protected $children;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Material", mappedBy="group", cascade={"all"})
+     */
+    public $materials;
 
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->materials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,19 +108,33 @@ class MaterialGroup
     }
 
     /**
-     * @return $this
+     * @return $this|null
      */
-    public function getRoot(): self
+    public function getRoot(): ?self
     {
         return $this->root;
     }
 
     /**
-     * @param MaterialGroup|null $parent
+     * @param MaterialGroup|null $root
+     * @return MaterialGroup
      */
-    public function setParent(MaterialGroup $parent = null): void
+    public function setRoot(MaterialGroup $root = null): self
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * @param MaterialGroup|null $parent
+     * @return MaterialGroup
+     */
+    public function setParent(MaterialGroup $parent = null): self
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
@@ -118,6 +143,40 @@ class MaterialGroup
     public function getParent(): ?self
     {
         return $this->parent;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getMaterials(): Collection
+    {
+        return $this->materials;
+    }
+
+    /**
+     * @param Material $material
+     * @return MaterialGroup
+     */
+    public function addMaterial(Material $material): MaterialGroup
+    {
+        $this->materials->contains($material) ?: $this->materials->add($material);
+
+        return $this;
+    }
+
+    public function removeMaterial(Material $material): MaterialGroup
+    {
+        !$this->materials->contains($material) ?: $this->materials->add($material);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }
 
