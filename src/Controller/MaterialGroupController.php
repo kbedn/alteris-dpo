@@ -23,18 +23,7 @@ class MaterialGroupController extends AbstractController
         $materialGroupRepository = $this->getDoctrine()->getRepository(MaterialGroup::class);
         return $this->render('material_group/index.html.twig', [
             'material_groups' => $materialGroupRepository->findAll(),
-            'htmlTree' => $materialGroupRepository->childrenHierarchy(
-                null,
-                false,
-                [
-                    'decorate' => true,
-                    'representationField' => 'name',
-                    'html' => true,
-                    'nodeDecorator' => static function($node) {
-                        return $node['name'].' <a href="/material-group/'.$node['id'].'">show</a> <a href="/material-group/'.$node['id'].'/edit">edit</a>';
-                    }
-                ]
-            )
+            'htmlTree' => $this->getHtmlTree(),
         ]);
     }
 
@@ -70,8 +59,10 @@ class MaterialGroupController extends AbstractController
      */
     public function show(MaterialGroup $materialGroup): Response
     {
+
         return $this->render('material_group/show.html.twig', [
             'material_group' => $materialGroup,
+            'htmlTree' => $this->getHtmlTree($materialGroup)
         ]);
     }
 
@@ -99,19 +90,24 @@ class MaterialGroupController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="material_group_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param MaterialGroup $materialGroup
-     * @return Response
+     * @param MaterialGroup|null $node
+     * @return string
      */
-    public function delete(Request $request, MaterialGroup $materialGroup): Response
+    private function getHtmlTree(MaterialGroup $node = null): string
     {
-        if ($this->isCsrfTokenValid('delete'.$materialGroup->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($materialGroup);
-            $entityManager->flush();
-        }
+        $materialGroupRepository = $this->getDoctrine()->getRepository(MaterialGroup::class);
 
-        return $this->redirectToRoute('material_group_index');
+        return $materialGroupRepository->childrenHierarchy(
+            $node ? $node : null,
+            false,
+            [
+                'decorate' => true,
+                'representationField' => 'name',
+                'html' => true,
+                'nodeDecorator' => static function($node) {
+                    return $node['name'].' <a href="/material-group/'.$node['id'].'">show</a> <a href="/material-group/'.$node['id'].'/edit">edit</a>';
+                }
+            ]
+        );
     }
 }

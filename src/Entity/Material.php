@@ -11,13 +11,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
 
 /**
- * @ApiResource(iri="http://schema.org/material")
+ * @ApiResource(
+ *     iri="http://schema.org/material",
+ *     collectionOperations={"get"={"method"="GET"}},
+ *     itemOperations={"get"={"method"="GET"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  *
  */
 class Material
 {
     /**
+     * @var int The unique identifier of the material.
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -36,14 +42,18 @@ class Material
     protected $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=32)
-     * @SWG\Property(type="string", maxLength=10)
+     * @SWG\Property(type="string", maxLength=32, description="Shortcode represents this material")
      * @ApiProperty(iri="http://schema.org/codeValue")
      * @Assert\NotBlank()
      */
     protected $code;
 
     /**
+     * @var UnitOfMeasure
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\UnitOfMeasure", inversedBy="materials")
      * @ORM\JoinColumn(name="material_id", referencedColumnName="id")
      */

@@ -2,12 +2,14 @@
 
 namespace App\Tests;
 
-use PHPUnit\Framework\TestCase;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 
-class MaterialTest extends TestCase
+class MaterialTest extends ApiTestCase
 {
-    public function testSomething()
+    public function testGetCollection(): void
     {
-        $this->assertTrue(true);
+        static::createClient()->request('GET', '/material/');
+
+        self::assertResponseIsSuccessful();
     }
 }

@@ -22,11 +22,13 @@ class MaterialGroup
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="The unique identifier of the material group.")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ApiProperty(iri="http://schema.org/name")
      * @Assert\NotBlank()
      */
     private $name;
@@ -50,6 +52,7 @@ class MaterialGroup
     private $rgt;
 
     /**
+     * @var MaterialGroup|null
      * @Gedmo\TreeRoot
      * @ORM\ManyToOne(targetEntity="MaterialGroup")
      * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")
@@ -75,7 +78,7 @@ class MaterialGroup
     protected $children;
 
     /**
-     * @var ArrayCollection
+     * @var Material[]
      * @ORM\OneToMany(targetEntity="App\Entity\Material", mappedBy="group", cascade={"all"})
      */
     public $materials;

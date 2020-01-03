@@ -84,21 +84,4 @@ class MaterialController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="material_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Material $material
-     * @return Response
-     */
-    public function delete(Request $request, Material $material): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$material->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($material);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('material_index');
-    }
 }
