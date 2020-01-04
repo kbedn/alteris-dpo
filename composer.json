@@ -4,7 +4,7 @@
     "name": "kbedn/alteris-dpo",
     "description": "private",
     "require": {
-        "php": "^7.4",
+        "php": "7.3.12",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.2",
@@ -39,7 +39,7 @@
             "*": "dist"
         },
         "platform": {
-            "php": "7.4.1"
+            "php": "7.3.12"
         },
         "sort-packages": true
     },
