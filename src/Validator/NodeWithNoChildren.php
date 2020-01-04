@@ -12,5 +12,5 @@ class NodeWithNoChildren extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public string $message = 'Node have children';
+    public $message = 'Node have children';
 }
