@@ -13,53 +13,74 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Gedmo\Tree(type="nested")
- * @ApiResource()
+ * @ApiResource(
+ *      itemOperations={
+ *         "get", "put", "patch"
+ *     },
+ *     collectionOperations={
+ *         "get", "post"
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class MaterialGroup
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @SWG\Property(description="The unique identifier of the material group.")
      */
-    private $id;
+    private int $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="http://schema.org/name")
      * @Assert\NotBlank()
+     * @SWG\Property(description="The name of the material group.")
      */
-    private $name;
+    private string $name;
 
     /**
+     * @var int
+     *
      * @Gedmo\TreeLeft
      * @ORM\Column(name="lft", type="integer")
      */
-    private $lft;
+    private int $lft;
 
     /**
+     * @var int
+     *
      * @Gedmo\TreeLevel
      * @ORM\Column(name="lvl", type="integer")
      */
-    private $lvl;
+    private int $lvl;
 
     /**
+     * @var int
+     *
      * @Gedmo\TreeRight
      * @ORM\Column(name="rgt", type="integer")
      */
-    private $rgt;
+    private int $rgt;
 
     /**
      * @var MaterialGroup|null
+     *
      * @Gedmo\TreeRoot
      * @ORM\ManyToOne(targetEntity="MaterialGroup")
      * @ORM\JoinColumn(name="tree_root", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $root;
+    private ?MaterialGroup $root;
 
     /**
+     * @var MaterialGroup|null
+     *
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="MaterialGroup", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
@@ -68,10 +89,11 @@ class MaterialGroup
      *     message="Node without children violation"
      * )
      */
-    private $parent;
+    private ?MaterialGroup $parent;
 
     /**
-     * @var ArrayCollection
+     * @var MaterialGroup[]|null
+     *
      * @ORM\OneToMany(targetEntity="MaterialGroup", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
@@ -179,7 +201,7 @@ class MaterialGroup
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return (string) $this->getName();
     }
 }
 

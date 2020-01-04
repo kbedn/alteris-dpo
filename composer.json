@@ -24,9 +24,11 @@
         "symfony/translation": "4.4.*",
         "symfony/twig-pack": "^1.0",
         "symfony/web-server-bundle": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "webonyx/graphql-php": "^0.13.8"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "symfony/browser-kit": "4.4.*",
         "symfony/css-selector": "4.4.*",
         "symfony/debug-pack": "^1.0",
@@ -37,6 +39,9 @@
     "config": {
         "preferred-install": {
             "*": "dist"
+        },
+        "platform": {
+            "php": "7.4.1"
         },
         "sort-packages": true
     },

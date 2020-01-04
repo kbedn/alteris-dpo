@@ -3,40 +3,60 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 /**
- * @ApiResource(iri="http://schema.org/materialExtent")
+ * @ApiResource(
+ *     iri="http://schema.org/materialExtent",
+ *     itemOperations={
+ *         "get", "put", "patch"
+ *     },
+ *     collectionOperations={
+ *         "get", "post"
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UnitOfMeasureRepository")
  */
 class UnitOfMeasure
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="The unique identifier of the unit of measure.")
      */
-    private $id;
+    private int $id;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255)
+     * @ApiProperty(iri="http://schema.org/name")
+     * @Assert\NotBlank()
+     */
+    private ?string $name;
+
+    /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $name;
+    private ?string $shortcut;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    private $shortcut;
-
-    /**
+     * @var Collection
+     *
      * @ORM\OneToMany(targetEntity="Material", mappedBy="unitOfMeasure")
      */
-    private $materials;
+    private Collection $materials;
 
     public function __construct()
     {
@@ -54,7 +74,7 @@ class UnitOfMeasure
     /**
      * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -113,6 +133,6 @@ class UnitOfMeasure
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return (string) $this->getName();
     }
 }

@@ -31,4 +31,6 @@
     <a class="btn btn-primary" href="{{ path('material_group_index') }}">back to list</a>
 
     <a class="btn btn-primary" href="{{ path('material_group_edit', {'id': material_group.id}) }}">edit</a>
+    <hr>
+    {{ htmlTree|raw }}
 {% endblock %}
