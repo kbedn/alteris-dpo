@@ -6,9 +6,10 @@
          backupGlobals="false"
          colors="true"
          bootstrap="config/bootstrap.php"
+         printerClass="LimeDeck\Testing\Printer"
 >
     <php>
-        <ini name="error_reporting" value="E_ERROR | E_WARNING" />
+        <ini name="error_reporting" value="E_ERROR" />
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />

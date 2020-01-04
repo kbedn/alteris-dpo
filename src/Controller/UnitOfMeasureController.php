@@ -1,4 +1,6 @@
-<?php namespace App\Controller;
+<?php
+
+namespace App\Controller;
 
 use App\Entity\UnitOfMeasure;
 use App\Form\UnitOfMeasureType;
@@ -35,12 +37,10 @@ class UnitOfMeasureController extends AbstractController
         $unitOfMeasure = new UnitOfMeasure();
         $form = $this->createForm(UnitOfMeasureType::class, $unitOfMeasure);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($unitOfMeasure);
             $entityManager->flush();
-
             return $this->redirectToRoute('unit_of_measure_index');
         }
 
@@ -72,10 +72,8 @@ class UnitOfMeasureController extends AbstractController
     {
         $form = $this->createForm(UnitOfMeasureType::class, $unitOfMeasure);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('unit_of_measure_index');
         }
 

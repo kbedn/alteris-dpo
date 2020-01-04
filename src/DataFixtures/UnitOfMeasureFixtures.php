@@ -14,13 +14,13 @@ class UnitOfMeasureFixtures extends Fixture
         for ($i = 0; $i < 4; $i++) {
             $unitOfMeasure = new UnitOfMeasure();
             $unitOfMeasure
-                ->setName('UnitOfMeasure_'.$i)
-                ->setShortcut('short_'.$i)
+                ->setName('UnitOfMeasure_' . $i)
+                ->setShortcut('short_' . $i)
                 ->setMaterials(new ArrayCollection())
             ;
 
             $manager->persist($unitOfMeasure);
-            $this->addReference(self::class.$i, $unitOfMeasure);
+            $this->addReference(self::class . $i, $unitOfMeasure);
         }
 
         $manager->flush();

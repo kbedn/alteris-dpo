@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-
 use App\Entity\MaterialGroup;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,7 +20,7 @@ class MaterialGroupFixtures extends Fixture
         for ($i = 0; $i < 3; $i++) {
             $child = new MaterialGroup();
             $child
-                ->setName('grupa_'.$i)
+                ->setName('grupa_' . $i)
                 ->setParent($group)
             ;
 

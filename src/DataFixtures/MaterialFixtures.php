@@ -14,9 +14,9 @@ class MaterialFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 4; $i++) {
             $material = new Material();
             $material
-                ->setName('materiał_'.$i)
+                ->setName('materiał_' . $i)
                 ->setCode(uniqid('', true))
-                ->setUnitOfMeasure($this->getReference(UnitOfMeasureFixtures::class.$i))
+                ->setUnitOfMeasure($this->getReference(UnitOfMeasureFixtures::class . $i))
                 ->setGroup($this->getReference(MaterialGroupFixtures::NODE_WITH_NO_CHILDREN))
             ;
             $manager->persist($material);

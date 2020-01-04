@@ -21,7 +21,7 @@ class MaterialGroupType extends AbstractType
             ->add('name')
             ->add('root')
             ->add('parent')
-            ->add('materials', CollectionType::class,[
+            ->add('materials', CollectionType::class, [
                 'entry_type' => MaterialType::class,
                 'allow_add' => true,
                 'allow_delete' => false,
