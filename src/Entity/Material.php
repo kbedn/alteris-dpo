@@ -3,18 +3,24 @@
 namespace App\Entity;
 
 use App\Validator as AppAssert;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\{
+    ApiResource,
+    ApiProperty,
+    ApiSubresource
+};
 use Doctrine\ORM\Mapping as ORM;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
 
 /**
  * @ApiResource(
  *     iri="http://schema.org/material",
- *     collectionOperations={"get"={"method"="GET"}},
- *     itemOperations={"get"={"method"="GET"}}
+ *      itemOperations={
+ *         "get", "put", "patch"
+ *     },
+ *     collectionOperations={
+ *         "get", "post"
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  *

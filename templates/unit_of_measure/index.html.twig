@@ -4,11 +4,9 @@
 
 {% block body %}
     <h1>UnitOfMeasure index</h1>
-
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Shortcut</th>
                 <th>actions</th>
@@ -17,7 +15,6 @@
         <tbody>
         {% for unit_of_measure in unit_of_measures %}
             <tr>
-                <td>{{ unit_of_measure.id }}</td>
                 <td>{{ unit_of_measure.name }}</td>
                 <td>{{ unit_of_measure.shortcut }}</td>
                 <td>
@@ -34,4 +31,5 @@
     </table>
 
     <a class="btn btn-primary" href="{{ path('unit_of_measure_new') }}">Create new</a>
+    <a class="btn btn-dark" href="{{ path('homepage') }}">Back to /</a>
 {% endblock %}

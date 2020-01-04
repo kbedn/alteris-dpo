@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Validator;
+<?php namespace App\Validator;
 
 use App\Entity\MaterialGroup;
 use Doctrine\ORM\EntityManagerInterface;

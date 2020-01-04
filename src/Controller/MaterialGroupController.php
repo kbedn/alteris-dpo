@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Controller;
+<?php namespace App\Controller;
 
 use App\Entity\Material;
 use App\Entity\MaterialGroup;
@@ -21,10 +19,14 @@ class MaterialGroupController extends AbstractController
     public function index(): Response
     {
         $materialGroupRepository = $this->getDoctrine()->getRepository(MaterialGroup::class);
-        return $this->render('material_group/index.html.twig', [
-            'material_groups' => $materialGroupRepository->findAll(),
-            'htmlTree' => $this->getHtmlTree(),
-        ]);
+
+        return $this->render(
+            'material_group/index.html.twig',
+            [
+                'material_groups' => $materialGroupRepository->findAll(),
+                'htmlTree' => $this->getHtmlTree(),
+            ]
+        );
     }
 
     /**
@@ -46,10 +48,13 @@ class MaterialGroupController extends AbstractController
             return $this->redirectToRoute('material_group_index');
         }
 
-        return $this->render('material_group/new.html.twig', [
-            'material_group' => $materialGroup,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'material_group/new.html.twig',
+            [
+                'material_group' => $materialGroup,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -60,10 +65,13 @@ class MaterialGroupController extends AbstractController
     public function show(MaterialGroup $materialGroup): Response
     {
 
-        return $this->render('material_group/show.html.twig', [
-            'material_group' => $materialGroup,
-            'htmlTree' => $this->getHtmlTree($materialGroup)
-        ]);
+        return $this->render(
+            'material_group/show.html.twig',
+            [
+                'material_group' => $materialGroup,
+                'htmlTree' => $this->getHtmlTree($materialGroup),
+            ]
+        );
     }
 
     /**
@@ -83,10 +91,13 @@ class MaterialGroupController extends AbstractController
             return $this->redirectToRoute('material_group_index');
         }
 
-        return $this->render('material_group/edit.html.twig', [
-            'material_group' => $materialGroup,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'material_group/edit.html.twig',
+            [
+                'material_group' => $materialGroup,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -104,9 +115,9 @@ class MaterialGroupController extends AbstractController
                 'decorate' => true,
                 'representationField' => 'name',
                 'html' => true,
-                'nodeDecorator' => static function($node) {
+                'nodeDecorator' => static function ($node) {
                     return $node['name'].' <a href="/material-group/'.$node['id'].'">show</a> <a href="/material-group/'.$node['id'].'/edit">edit</a>';
-                }
+                },
             ]
         );
     }

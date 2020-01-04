@@ -4,11 +4,9 @@
 
 {% block body %}
     <h1>Material index</h1>
-
-    <table class="table">
+    <table class="table table-primary">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Code</th>
                 <th>Group</th>
@@ -19,7 +17,6 @@
         <tbody>
         {% for material in materials %}
             <tr>
-                <td>{{ material.id }}</td>
                 <td>{{ material.name }}</td>
                 <td>{{ material.code }}</td>
                 <td>{{ material.group }}</td>
@@ -38,4 +35,5 @@
     </table>
 
     <a class="btn btn-primary" href="{{ path('material_new') }}">Create new</a>
+    <a class="btn btn-dark" href="{{ path('homepage') }}">Back to /</a>
 {% endblock %}

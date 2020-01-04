@@ -13,7 +13,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Gedmo\Tree(type="nested")
- * @ApiResource()
+ * @ApiResource(
+ *      itemOperations={
+ *         "get", "put", "patch"
+ *     },
+ *     collectionOperations={
+ *         "get", "post"
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  */
 class MaterialGroup

@@ -5,11 +5,19 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource(iri="http://schema.org/materialExtent")
+ * @ApiResource(
+ *     iri="http://schema.org/materialExtent",
+ *     itemOperations={
+ *         "get", "put", "patch"
+ *     },
+ *     collectionOperations={
+ *         "get", "post"
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UnitOfMeasureRepository")
  */
 class UnitOfMeasure
@@ -54,7 +62,7 @@ class UnitOfMeasure
     /**
      * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -71,9 +79,9 @@ class UnitOfMeasure
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getShortcut(): string
+    public function getShortcut(): ?string
     {
         return $this->shortcut;
     }
@@ -90,15 +98,15 @@ class UnitOfMeasure
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getMaterials(): ArrayCollection
+    public function getMaterials(): Collection
     {
         return $this->materials;
     }
 
     /**
-     * @param ArrayCollection $materials
+     * @param Collection $materials
      * @return UnitOfMeasure
      */
     public function setMaterials(ArrayCollection $materials): UnitOfMeasure

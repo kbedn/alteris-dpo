@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Repository;
+<?php namespace App\Repository;
 
 use App\Entity\UnitOfMeasure;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -18,33 +16,4 @@ class UnitOfMeasureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UnitOfMeasure::class);
     }
-
-    // /**
-    //  * @return UnitOfMeasure[] Returns an array of UnitOfMeasure objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UnitOfMeasure
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Validator;
+<?php namespace App\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -14,5 +12,5 @@ class NodeWithNoChildren extends Constraint
      * Any public properties become valid options for the annotation.
      * Then, use these in your validator class.
      */
-    public $message = 'Node have children';
+    public string $message = 'Node have children';
 }
