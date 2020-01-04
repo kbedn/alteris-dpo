@@ -3,18 +3,24 @@
 namespace App\Entity;
 
 use App\Validator as AppAssert;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\{
+    ApiResource,
+    ApiProperty,
+    ApiSubresource
+};
 use Doctrine\ORM\Mapping as ORM;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Swagger\Annotations as SWG;
 
 /**
  * @ApiResource(
  *     iri="http://schema.org/material",
- *     collectionOperations={"get"={"method"="GET"}},
- *     itemOperations={"get"={"method"="GET"}}
+ *      itemOperations={
+ *         "get", "put", "patch"
+ *     },
+ *     collectionOperations={
+ *         "get", "post"
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  *
@@ -29,44 +35,47 @@ class Material
      * @ORM\Column(type="integer")
      * @SWG\Property(description="The unique identifier of the material.")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @var string|null the name of the item
+     * @var string|null The name of the material.
      *
      * @ORM\Column(type="string", length=32)
      * @SWG\Property(type="string", maxLength=32)
      * @ApiProperty(iri="http://schema.org/name")
      * @Assert\NotBlank()
      */
-    protected $name;
+    protected ?string $name;
 
     /**
-     * @var string
+     * @var string Shortcode represents this material
      *
      * @ORM\Column(type="string", length=32)
-     * @SWG\Property(type="string", maxLength=32, description="Shortcode represents this material")
+     * @SWG\Property(type="string", maxLength=32)
      * @ApiProperty(iri="http://schema.org/codeValue")
+     * @ApiSubresource()
      * @Assert\NotBlank()
      */
-    protected $code;
+    protected string $code;
 
     /**
-     * @var UnitOfMeasure
+     * @var UnitOfMeasure Unit of measure describing this material.
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\UnitOfMeasure", inversedBy="materials")
      * @ORM\JoinColumn(name="material_id", referencedColumnName="id")
+     * @ApiSubresource()
+     * @Assert\NotBlank()
      */
-    protected $unitOfMeasure;
+    protected UnitOfMeasure $unitOfMeasure;
 
     /**
-     * @var MaterialGroup
+     * @var MaterialGroup Material group without children
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\MaterialGroup", inversedBy="materials")
      * @Assert\NotBlank()
      * @AppAssert\NodeWithNoChildren()
      */
-    protected $group;
+    protected MaterialGroup $group;
 
     /**
      * @return int|null

@@ -59,7 +59,6 @@ class MaterialGroupController extends AbstractController
      */
     public function show(MaterialGroup $materialGroup): Response
     {
-
         return $this->render('material_group/show.html.twig', [
             'material_group' => $materialGroup,
             'htmlTree' => $this->getHtmlTree($materialGroup)
@@ -98,7 +97,7 @@ class MaterialGroupController extends AbstractController
         $materialGroupRepository = $this->getDoctrine()->getRepository(MaterialGroup::class);
 
         return $materialGroupRepository->childrenHierarchy(
-            $node ? $node : null,
+            $node ?: null,
             false,
             [
                 'decorate' => true,
